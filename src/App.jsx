@@ -16,21 +16,27 @@ import {
 } from "lucide-react";
 import "./App.css";
 
-const skills = [
-  "Python",
-  "Java",
-  "JavaScript",
-  "React",
-  "Node.js",
-  "Express",
-  "SQL",
-  "MongoDB",
-  "Deep Leaning",
-  "TensorFlow / Keras",
-  "Git & GitHub",
-  "Data Analysis"
 
+const skills = [
+  { name: "Python", url: "https://www.w3schools.com/python/" },
+  { name: "Java", url: "https://www.w3schools.com/java/" },
+  { name: "JavaScript", url: "https://www.w3schools.com/js/" },
+  { name: "React.js", url: "https://www.w3schools.com/react/" },
+  { name: "Node.js", url: "https://www.w3schools.com/nodejs/" },
+  { name: "SQL", url: "https://www.w3schools.com/sql/" },
+  { name: "MongoDB", url: "https://www.w3schools.com/mongodb/" },
+  {
+    name: "Deep Learning",
+    url: "https://www.w3schools.com/python/python_ml_getting_started.asp",
+  },
+  {
+    name: "TensorFlow / Keras",
+    url: "https://www.w3schools.com/python/python_ml_getting_started.asp",
+  },
+  { name: "Git / GitHub", url: "https://www.w3schools.com/git/" },
+  { name: "Data Analysis", url: "https://www.w3schools.com/datascience/" },
 ];
+
 const projects = [
   {
     number: "01",
@@ -384,10 +390,17 @@ function Portfolio() {
           </p>
           <div className="skills-grid">
             {skills.map((skill) => (
-              <div className="skill-chip" key={skill}>
+              <a
+                className="skill-chip"
+                key={skill.name}
+                href={skill.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Code2 size={17} aria-hidden="true" />
-                {skill}
-              </div>
+                {skill.name}
+                <ArrowUpRight size={14} aria-hidden="true" />
+              </a>
             ))}
           </div>
         </section>
