@@ -313,7 +313,7 @@
     min-height: 42px;
     padding: 10px 12px;
   }
-
+  
   .portfolio-main {
     margin-left: 0;
     padding-top: 76px;
@@ -331,6 +331,25 @@
     scroll-margin-top: 100px;
   }
 }
+
+
+  .portfolio-main {
+    margin-left: 0;
+    padding-top: 76px;
+  }
+
+  .portfolio-topbar {
+    top: 76px;
+  }
+
+  html {
+    scroll-padding-top: 100px;
+  }
+
+  .portfolio-main section[id] {
+    scroll-margin-top: 100px;
+  }
+
 
 .sidebar-profile {
   padding: 30px 8px 24px;
