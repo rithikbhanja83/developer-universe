@@ -13,6 +13,9 @@ import {
   FolderGit2,
   GraduationCap,
   Award,
+  FileText,
+  Download,
+  ArrowUpRight
 } from "lucide-react";
 import "./App.css";
 
@@ -196,7 +199,7 @@ function Intro({ onEnter }) {
 
 
 
-function Portfolio() {
+function Portfolio({ onOpenCredentials }) {
   const [activeSection, setActiveSection] = useState("home");
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -253,7 +256,15 @@ function Portfolio() {
               className={`sidebar-link ${
                 activeSection === id ? "active" : ""
               }`}
-              onClick={() => goToSection(id)}
+              
+              onClick={() => {
+                if (id === "internships") {
+                  onOpenCredentials?.();
+                } else {
+                  goToSection(id);
+                }
+              }}
+
             >
               <Icon size={18} />
               <span>{label}</span>
@@ -569,7 +580,10 @@ function Portfolio() {
               rel="noopener noreferrer"
             >
               LinkedIn <ArrowRight size={16} />
-            </a>
+            </a>     
+            
+
+            
           </div>
         </section>
 
@@ -582,6 +596,166 @@ function Portfolio() {
     </motion.div>
   );
 }
+
+
+
+const credentials = [
+  {
+    id: "internpe",
+    category: "INTERNSHIP",
+    title: "Web Development Intern",
+    organization: "InternPe",
+    duration: "30 June 2025 – 27 July 2025",
+    description:
+      "Completed a web development internship focused on practical learning and frontend development.",
+    image: "/certificates/intern.png",
+    type: "image",
+    linkLabel: "View Certificate",
+  },
+  {
+    id: "kaggle-python",
+    category: "COURSE COMPLETION",
+    title: "Python Course",
+    organization: "Kaggle",
+    duration: "26 April 2024",
+    description:
+      "Completed Kaggle's Python course and developed foundational Python programming knowledge.",
+    image: "/certificates/kaggle.jpeg",
+    type: "image",
+    linkLabel: "View Certificate",
+  },
+  {
+    id: "oasis-infobyte",
+    category: "LETTER OF RECOMMENDATION",
+    title: "Web Development & Designing Intern",
+    organization: "Oasis Infobyte",
+    duration: "1 month · 15 July 2025",
+    description:
+      "Recognized for technical proficiency, commitment, analytical thinking, and problem-solving skills.",
+    image: "/certificates/oasis.png",
+    type: "image",
+    linkLabel: "View Letter",
+  },
+  {
+    id: "aws-architecture",
+    category: "JOB SIMULATION",
+    title: "Solutions Architecture Job Simulation",
+    organization: "AWS · Forage",
+    duration: "10 December 2025",
+    description:
+      "Completed a practical task focused on designing a simple, scalable hosting architecture.",
+    image: "/certificates/aws.png",
+    type: "image",
+    linkLabel: "View Certificate",
+  },
+  {
+    id: "linkedin-mastery",
+    category: "SKILLING CERTIFICATE",
+    title: "LinkedIn Mastery for IT Professionals",
+    organization: "Skill India Digital Hub",
+    duration: "18 September 2026 · 55 minutes",
+    description:
+      "Completed an online course focused on professional visibility and career opportunities.",
+    image: "/certificates/it proff.png",
+    type: "image",
+    linkLabel: "View Certificate",
+  },
+];
+
+
+function CredentialCard({ credential }) {
+  return (
+    <article className="training-card credential-card">
+      <div className="credential-details">
+        <p className="section-kicker">{credential.category}</p>
+        <h2>{credential.title}</h2>
+        <p className="credential-organization">
+          {credential.organization}
+        </p>
+        <p className="credential-duration">
+          {credential.duration}
+        </p>
+        <p>{credential.description}</p>
+
+        <a
+          className="connect-button"
+          href={credential.image}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {credential.linkLabel} ↗
+        </a>
+      </div>
+
+      
+        <a
+          className="certificate-image-link"
+          href={credential.image}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${credential.title}`}
+        >
+          {credential.type === "image" ? (
+            <img
+              src={credential.image}
+              alt={`${credential.title} certificate`}
+              className="certificate-image"
+              loading="lazy"
+            />
+          ) : (
+            <div className="certificate-pdf-preview">
+              <span className="pdf-label">PDF DOCUMENT</span>
+              <h3>{credential.title}</h3>
+              <p>{credential.organization}</p>
+              <span>Open document ↗</span>
+            </div>
+          )}
+        </a>
+
+    </article>
+  );
+}
+
+function CredentialsPage({ onBack }) {
+  return (
+    <motion.main
+      className="credentials-page"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.35 }}
+    >
+      <header className="credentials-header">
+        <button
+          type="button"
+          className="button-secondary"
+          onClick={onBack}
+        >
+          ← Back to Portfolio
+        </button>
+
+        <p className="section-kicker">PROFESSIONAL JOURNEY</p>
+        <h1>
+          Internships &amp; <span>Certifications.</span>
+        </h1>
+        <p className="section-description">
+          A collection of my internships, course completions,
+          job simulations, and professional recognition.
+        </p>
+      </header>
+
+      <div className="credentials-list">
+        {credentials.map((credential) => (
+          <CredentialCard
+            key={credential.id}
+            credential={credential}
+          />
+        ))}
+      </div>
+    </motion.main>
+  );
+}
+
 
 
 export default function App() {
@@ -599,8 +773,16 @@ export default function App() {
           key="home"
           onEnter={() => setScreen("portfolio")}
         />
+      ) : screen === "credentials" ? (
+        <CredentialsPage
+          key="credentials"
+          onBack={() => setScreen("portfolio")}
+        />
       ) : (
-        <Portfolio key="portfolio" />
+        <Portfolio
+          key="portfolio"
+          onOpenCredentials={() => setScreen("credentials")}
+        />
       )}
     </AnimatePresence>
   );
